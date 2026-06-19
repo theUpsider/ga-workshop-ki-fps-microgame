@@ -1,6 +1,6 @@
 # 02-code-visual-feedback – Visuelles Feedback fuer Zustaende
 
-**Status:** offen
+**Status:** erledigt
 
 ## Ziel
 
@@ -20,15 +20,15 @@ Erweiterung der Barrier-Komponente um visuelles Feedback:
 
 ## Akzeptanzkriterien
 
-- [ ] Die Barriere zeigt im `locked`-Zustand ein klar erkennbares visuelles Signal (z. B. rotes Material).
-- [ ] Die Barriere zeigt im `unlocked`-Zustand ein klar anderes visuelles Signal (z. B. gruenes Material oder deaktiviertes Mesh).
-- [ ] Der Zustandswechsel loest ein im Inspector konfigurierbares Event aus.
-- [ ] Visuelle Assets (Materialien, Farben) sind im Inspector austauschbar.
-- [ ] Die Aenderungen sind im Play Mode sofort sichtbar.
+- [x] Die Barriere zeigt im `locked`-Zustand ein klar erkennbares visuelles Signal (z. B. rotes Material).
+- [x] Die Barriere zeigt im `unlocked`-Zustand ein klar anderes visuelles Signal (z. B. gruenes Material oder deaktiviertes Mesh).
+- [x] Der Zustandswechsel loest ein im Inspector konfigurierbares Event aus.
+- [x] Visuelle Assets (Materialien, Farben) sind im Inspector austauschbar.
+- [x] Die Aenderungen sind im Play Mode sofort sichtbar.
 
 ## Definition of Done
 
-- [ ] Visuelles Feedback fuer beide Zustaende funktioniert.
-- [ ] Event-Hook ist vorhanden und im Inspector verdrahtbar.
-- [ ] Feature wurde im Play Mode geprueft (Zustandswechsel sichtbar).
-- [ ] Keine bekannten Regressionen.
+- [x] Visuelles Feedback fuer beide Zustaende funktioniert.
+- [x] Event-Hook ist vorhanden und im Inspector verdrahtbar.
+- [x] Feature wurde im Play Mode geprueft (Zustandswechsel sichtbar).
+- [x] Keine bekannten Regressionen.

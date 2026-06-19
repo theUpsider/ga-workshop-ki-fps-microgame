@@ -23,6 +23,10 @@ namespace Unity.FPS.UI
             DebugUtility.HandleErrorIfNullFindObject<Jetpack, NotificationHUDManager>(jetpack, this);
             jetpack.OnUnlockJetpack += OnUnlockJetpack;
 
+            Barrier barrier = FindAnyObjectByType<Barrier>();
+            DebugUtility.HandleErrorIfNullFindObject<Barrier, NotificationHUDManager>(barrier, this);
+            barrier.OnStateChanged.AddListener(OnBarrierStateChanged);
+
             EventManager.AddListener<ObjectiveUpdateEvent>(OnObjectiveUpdateEvent);
         }
 
@@ -43,6 +47,19 @@ namespace Unity.FPS.UI
             CreateNotification("Jetpack unlocked");
         }
 
+        void OnBarrierStateChanged(BarrierState state)
+        {
+            switch (state)
+            {
+                case BarrierState.Locked:
+                    CreateNotification("Ausgang gesperrt");
+                    break;
+                case BarrierState.Unlocked:
+                    CreateNotification("Ausgang offen");
+                    break;
+            }
+        }
+
         public void CreateNotification(string text)
         {
             GameObject notificationInstance = Instantiate(NotificationPrefab, NotificationPanel);
@@ -58,6 +75,12 @@ namespace Unity.FPS.UI
         void OnDestroy()
         {
             EventManager.RemoveListener<ObjectiveUpdateEvent>(OnObjectiveUpdateEvent);
+
+            Barrier barrier = FindAnyObjectByType<Barrier>();
+            if (barrier != null)
+            {
+                barrier.OnStateChanged.RemoveListener(OnBarrierStateChanged);
+            }
         }
     }
 }

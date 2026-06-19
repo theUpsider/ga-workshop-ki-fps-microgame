@@ -1,6 +1,6 @@
 # 01-code-barrier-component – Barrier-Komponente erstellen
 
-**Status:** offen
+**Status:** erledigt
 
 ## Ziel
 
@@ -23,20 +23,20 @@ Die Komponente soll:
 
 ## Akzeptanzkriterien
 
-- [ ] Die Komponente existiert und kann einem GameObject hinzugefuegt werden.
-- [ ] Sie besitzt die Zustaende `locked` und `unlocked` als serialisierten Wert.
-- [ ] Im `locked`-Zustand ist die Kollision der Barriere aktiv.
-- [ ] Im `unlocked`-Zustand ist die Kollision deaktiviert.
-- [ ] Eine oeffentliche Methode schaltet von `locked` auf `unlocked` um.
-- [ ] Der `unlocked`-Zustand ist persistent – eine einmal freigeschaltete Barriere kann nicht zurueck in `locked` fallen.
-- [ ] Der Zustandswechsel wird per Log-Ausgabe ausgegeben (Testbarkeit).
-- [ ] Der Initialzustand ist im Inspector konfigurierbar (Default: `locked`).
-- [ ] Code-Stil und Ordnerstruktur passen zur bestehenden Codebase.
+- [x] Die Komponente existiert und kann einem GameObject hinzugefuegt werden.
+- [x] Sie besitzt die Zustaende `locked` und `unlocked` als serialisierten Wert.
+- [x] Im `locked`-Zustand ist die Kollision der Barriere aktiv.
+- [x] Im `unlocked`-Zustand ist die Kollision deaktiviert.
+- [x] Eine oeffentliche Methode schaltet von `locked` auf `unlocked` um.
+- [x] Der `unlocked`-Zustand ist persistent – eine einmal freigeschaltete Barriere kann nicht zurueck in `locked` fallen.
+- [x] Der Zustandswechsel wird per Log-Ausgabe ausgegeben (Testbarkeit).
+- [x] Der Initialzustand ist im Inspector konfigurierbar (Default: `locked`).
+- [x] Code-Stil und Ordnerstruktur passen zur bestehenden Codebase.
 
 ## Definition of Done
 
-- [ ] Die Komponente ist erstellt und kompiliert fehlerfrei.
-- [ ] Beide Zustaende sind im Play Mode testbar (manuelles Umschalten moeglich).
-- [ ] Kollision blockiert im `locked`-Zustand, laesst durch im `unlocked`-Zustand.
-- [ ] Zustandswechsel wird geloggt.
-- [ ] Keine bekannten Regressionen.
+- [x] Die Komponente ist erstellt und kompiliert fehlerfrei.
+- [x] Beide Zustaende sind im Play Mode testbar (manuelles Umschalten moeglich).
+- [x] Kollision blockiert im `locked`-Zustand, laesst durch im `unlocked`-Zustand.
+- [x] Zustandswechsel wird geloggt.
+- [x] Keine bekannten Regressionen.

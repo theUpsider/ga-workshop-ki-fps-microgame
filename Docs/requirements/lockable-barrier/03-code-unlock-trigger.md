@@ -1,6 +1,6 @@
 # 03-code-unlock-trigger – Freischaltungs-Trigger implementieren
 
-**Status:** offen
+**Status:** erledigt
 
 ## Ziel
 
@@ -22,16 +22,16 @@ Erstellung einer Freischaltungs-Komponente, die:
 
 ## Akzeptanzkriterien
 
-- [ ] Die Freischaltungs-Komponente existiert und kann im Editor konfiguriert werden.
-- [ ] Die Komponente haelt eine Referenz auf eine oder mehrere Barrier-Instanzen.
-- [ ] Die Bedingung "Alle Gegner besiegt" ist implementiert und loest die Freischaltung aus.
-- [ ] Die Freischaltung wird nur einmal ausgeloest (wird nicht wiederholt).
-- [ ] Das System arbeitet mit dem bestehenden Gegner-Management des Projekts zusammen.
+- [x] Die Freischaltungs-Komponente existiert und kann im Editor konfiguriert werden.
+- [x] Die Komponente haelt eine Referenz auf eine oder mehrere Barrier-Instanzen.
+- [x] Die Bedingung "Alle Gegner besiegt" ist implementiert und loest die Freischaltung aus.
+- [x] Die Freischaltung wird nur einmal ausgeloest (wird nicht wiederholt).
+- [x] Das System arbeitet mit dem bestehenden Gegner-Management des Projekts zusammen.
 
 ## Definition of Done
 
-- [ ] Die Komponente kompiliert fehlerfrei.
-- [ ] Freischaltung durch "Alle Gegner besiegt" funktioniert im Play Mode.
-- [ ] Mehrere Barrieren koennen gleichzeitig freigeschaltet werden.
-- [ ] Feature wurde im Play Mode geprueft.
-- [ ] Keine bekannten Regressionen (Gegner-KI, Gegner-Management unbeeintraechtigt).
+- [x] Die Komponente kompiliert fehlerfrei.
+- [x] Freischaltung durch "Alle Gegner besiegt" funktioniert im Play Mode.
+- [x] Mehrere Barrieren koennen gleichzeitig freigeschaltet werden.
+- [x] Feature wurde im Play Mode geprueft.
+- [x] Keine bekannten Regressionen (Gegner-KI, Gegner-Management unbeeintraechtigt).
