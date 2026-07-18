@@ -2,6 +2,7 @@
 req-id: SWR-300
 status: draft
 trace: optional
+test: optional
 title: Epic: Interaktionssystem mit Schaltern oder Terminals
 ---
 

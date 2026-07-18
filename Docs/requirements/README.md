@@ -26,6 +26,7 @@ title: Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik
 | `req-id` | `SWR-<nummer>` (eindeutig) | Stabile ID; wird zum Enum-Member `SWR.SWR_<nummer>` |
 | `status` | `draft` \| `approved` \| `deprecated` | Lebenszyklus (siehe unten) |
 | `trace` | `required` (Default) \| `optional` | Ob der Code das Requirement referenzieren **muss** |
+| `test` | `required` (Default) \| `optional` | Ob ein Test das Requirement abdecken **muss** |
 | `title` | Freitext | Kurztitel; Fallback ist die erste Markdown-Ueberschrift |
 
 Nummernschema: `SWR-x00` = Epic eines Features (trace optional, wird ueber die Subtasks
@@ -49,13 +50,32 @@ Das ist ein Compile-Zeit-Link, kein Kommentar. Ein Element kann mehrere Requirem
 tracen (`[Traces(SWR.SWR_101, SWR.SWR_102)]`), ein Requirement kann an mehreren Stellen
 getraced werden.
 
+## Testabdeckung im Code
+
+Tests deklarieren mit dem `[Verifies]`-Attribut, welches Requirement sie abdecken —
+das Test-Gegenstueck zu `[Traces]`:
+
+```csharp
+[Test]
+[Verifies(SWR.SWR_101)]
+public void Barrier_StartsLocked_WithActiveCollision() { ... }
+```
+
+`[Verifies]` zaehlt nur in Test-Assemblies (Assemblies mit NUnit-Referenz) als
+Abdeckung. Jedes approved Requirement mit `test: required` braucht mindestens eine
+`[Verifies]`-Referenz, sonst schlaegt die Verifikation fehl (Console-Error,
+Testfehler, Build-Abbruch, Pre-Commit-Hook). Implementierungs-Traces und
+Test-Abdeckung werden getrennt gezaehlt — ein `[Traces]` in einem Test ersetzt
+keine Abdeckung und umgekehrt.
+
 ## Lebenszyklus (graduated lifecycle)
 
 | Statusaenderung | Wirkung |
 | --- | --- |
 | `draft` | Traceable existiert, Code darf referenzieren, nichts wird erzwungen |
 | `approved` + `trace: required` | Mindestens eine `[Traces]`-Referenz muss existieren, sonst Verifikationsfehler (Console-Error nach jedem Compile, Testfehler, Build-Abbruch) |
-| `deprecated` | Traceable erhaelt `[Obsolete]` → IDE-/Compiler-Warnung an **jeder** Referenzstelle |
+| `approved` + `test: required` | Mindestens eine `[Verifies]`-Referenz in einer Test-Assembly muss existieren, sonst Verifikationsfehler |
+| `deprecated` | Traceable erhaelt `[Obsolete]` → IDE-/Compiler-Warnung an **jeder** Referenzstelle (auch in Tests) |
 | Datei/`req-id` entfernt | Enum-Member verschwindet → **Compile-Fehler** an jeder Referenzstelle |
 
 ## Ablauf bei Requirement-Aenderungen
@@ -101,6 +121,5 @@ C#-Generator dasselbe Ergebnis erzeugen — der C#-Generator im Editor bleibt ma
 - [Traceability.cs](../../Assets/FPS/Scripts/Game/Requirements/Traceability.cs) — `TracesAttribute`, `RequirementAttribute`, `RequirementStatus`
 - [SWR.g.cs](../../Assets/FPS/Scripts/Game/Requirements/SWR.g.cs) — generiert, nicht manuell editieren
 - [ReqToCodeTests.cs](../../Assets/Tests/EditMode/ReqToCodeTests.cs) — EditMode-Tests der gesamten Kette
-
-> Naechster Schritt (geplant): Verknuepfung der Requirements mit Tests, damit auch die
-> Testabdeckung pro SWR nachweisbar wird.
+- [BarrierFeatureTests.cs](../../Assets/Tests/EditMode/BarrierFeatureTests.cs) — Testabdeckung SWR-101..104
+- [AlarmSystemTests.cs](../../Assets/Tests/EditMode/AlarmSystemTests.cs) — Testabdeckung SWR-202..206

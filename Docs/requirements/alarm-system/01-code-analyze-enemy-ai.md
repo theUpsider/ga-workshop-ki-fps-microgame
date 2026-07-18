@@ -2,6 +2,7 @@
 req-id: SWR-201
 status: approved
 trace: optional
+test: optional
 title: Analyse der Gegner-KI (Erkennung, Schaden, Zustaende)
 ---
 

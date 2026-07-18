@@ -36,8 +36,11 @@ namespace Unity.FPS.Game
         /// <summary>Short hash of the requirement document; changes when the requirement text changes.</summary>
         public string ContentHash { get; }
 
+        /// <summary>When true, at least one [Verifies] reference must exist in a test assembly.</summary>
+        public bool TestRequired { get; }
+
         public RequirementAttribute(string id, RequirementStatus status, string title, string sourcePath,
-            bool traceRequired, string contentHash)
+            bool traceRequired, string contentHash, bool testRequired = true)
         {
             Id = id;
             Status = status;
@@ -45,6 +48,7 @@ namespace Unity.FPS.Game
             SourcePath = sourcePath;
             TraceRequired = traceRequired;
             ContentHash = contentHash;
+            TestRequired = testRequired;
         }
     }
 
@@ -65,6 +69,24 @@ namespace Unity.FPS.Game
         public SWR[] Requirements { get; }
 
         public TracesAttribute(params SWR[] requirements)
+        {
+            Requirements = requirements ?? Array.Empty<SWR>();
+        }
+    }
+
+    /// <summary>
+    /// Links a test to the requirement(s) whose behaviour it verifies (test coverage
+    /// counterpart of <see cref="TracesAttribute"/>). Only references inside test
+    /// assemblies count as coverage. Same compile-time lifecycle: removed requirement
+    /// = build error, deprecated requirement = obsolete-warning on the test.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method,
+        AllowMultiple = true, Inherited = false)]
+    public sealed class VerifiesAttribute : Attribute
+    {
+        public SWR[] Requirements { get; }
+
+        public VerifiesAttribute(params SWR[] requirements)
         {
             Requirements = requirements ?? Array.Empty<SWR>();
         }

@@ -2,6 +2,7 @@
 req-id: SWR-101
 status: approved
 trace: required
+test: required
 title: Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik
 ---
 

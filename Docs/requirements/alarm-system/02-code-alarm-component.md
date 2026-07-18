@@ -2,6 +2,7 @@
 req-id: SWR-202
 status: approved
 trace: required
+test: required
 title: Alarm-Komponente mit konfigurierbarem Radius
 ---
 

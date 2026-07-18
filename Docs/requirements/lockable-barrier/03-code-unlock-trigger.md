@@ -2,6 +2,7 @@
 req-id: SWR-103
 status: approved
 trace: required
+test: required
 title: Freischaltungs-Trigger fuer Barrieren
 ---
 

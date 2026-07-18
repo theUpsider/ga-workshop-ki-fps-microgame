@@ -2,6 +2,7 @@
 req-id: SWR-204
 status: approved
 trace: required
+test: required
 title: Alarm bei Schaden durch den Spieler ausloesen
 ---
 

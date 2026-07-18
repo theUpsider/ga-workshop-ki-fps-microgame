@@ -2,6 +2,7 @@
 req-id: SWR-200
 status: approved
 trace: optional
+test: optional
 title: Epic: Alarm-System fuer Gegner
 ---
 

@@ -2,6 +2,7 @@
 req-id: SWR-102
 status: approved
 trace: required
+test: required
 title: Visuelles Feedback der Barrier-Zustaende
 ---
 

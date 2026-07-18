@@ -2,7 +2,9 @@
     "name": "EditMode",
     "references": [
         "fps.Game",
-        "fps.Game.Editor"
+        "fps.Game.Editor",
+        "fps.Gameplay",
+        "fps.AI"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"

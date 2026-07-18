@@ -2,6 +2,7 @@
 req-id: SWR-104
 status: approved
 trace: optional
+test: required
 title: Integration und Test der Barrier im Level
 ---
 

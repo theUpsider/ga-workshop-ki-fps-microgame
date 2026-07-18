@@ -2,7 +2,7 @@
 //     ReqToCode traceables, generated from Docs/requirements. DO NOT EDIT MANUALLY.
 //     Source of truth: the markdown file referenced on each member.
 //     Regenerate: menu "Tools/ReqToCode/Regenerate Traceables" (also runs automatically on script reload).
-//     requirements-hash: 98f59e152a2ac179
+//     requirements-hash: c12890097478d6bd
 // </auto-generated>
 using System;
 
@@ -16,59 +16,59 @@ namespace Unity.FPS.Game
     public enum SWR
     {
         /// <summary>[approved] Epic: Gesperrter Ausgang / Lockable Barrier (Docs/requirements/lockable-barrier/README.md)</summary>
-        [Requirement("SWR-100", RequirementStatus.Approved, "Epic: Gesperrter Ausgang / Lockable Barrier", "Docs/requirements/lockable-barrier/README.md", false, "815164dbb88d3a56")]
+        [Requirement("SWR-100", RequirementStatus.Approved, "Epic: Gesperrter Ausgang / Lockable Barrier", "Docs/requirements/lockable-barrier/README.md", false, "6e557da94afec8a8", false)]
         SWR_100 = 100,
 
         /// <summary>[approved] Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik (Docs/requirements/lockable-barrier/01-code-barrier-component.md)</summary>
-        [Requirement("SWR-101", RequirementStatus.Approved, "Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik", "Docs/requirements/lockable-barrier/01-code-barrier-component.md", true, "42d9661dc988a5cd")]
+        [Requirement("SWR-101", RequirementStatus.Approved, "Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik", "Docs/requirements/lockable-barrier/01-code-barrier-component.md", true, "b49d7dfef60f8158", true)]
         SWR_101 = 101,
 
         /// <summary>[approved] Visuelles Feedback der Barrier-Zustaende (Docs/requirements/lockable-barrier/02-code-visual-feedback.md)</summary>
-        [Requirement("SWR-102", RequirementStatus.Approved, "Visuelles Feedback der Barrier-Zustaende", "Docs/requirements/lockable-barrier/02-code-visual-feedback.md", true, "3bbbef862ac522d8")]
+        [Requirement("SWR-102", RequirementStatus.Approved, "Visuelles Feedback der Barrier-Zustaende", "Docs/requirements/lockable-barrier/02-code-visual-feedback.md", true, "64a365576e0a3946", true)]
         SWR_102 = 102,
 
         /// <summary>[approved] Freischaltungs-Trigger fuer Barrieren (Docs/requirements/lockable-barrier/03-code-unlock-trigger.md)</summary>
-        [Requirement("SWR-103", RequirementStatus.Approved, "Freischaltungs-Trigger fuer Barrieren", "Docs/requirements/lockable-barrier/03-code-unlock-trigger.md", true, "55b019e0dae24e10")]
+        [Requirement("SWR-103", RequirementStatus.Approved, "Freischaltungs-Trigger fuer Barrieren", "Docs/requirements/lockable-barrier/03-code-unlock-trigger.md", true, "a9fa7f5d81ffffaa", true)]
         SWR_103 = 103,
 
         /// <summary>[approved] Integration und Test der Barrier im Level (Docs/requirements/lockable-barrier/04-code-integration-test.md)</summary>
-        [Requirement("SWR-104", RequirementStatus.Approved, "Integration und Test der Barrier im Level", "Docs/requirements/lockable-barrier/04-code-integration-test.md", false, "5a0273bf051a8ecf")]
+        [Requirement("SWR-104", RequirementStatus.Approved, "Integration und Test der Barrier im Level", "Docs/requirements/lockable-barrier/04-code-integration-test.md", false, "99f58d7551b5556e", true)]
         SWR_104 = 104,
 
         /// <summary>[approved] Epic: Alarm-System fuer Gegner (Docs/requirements/alarm-system/README.md)</summary>
-        [Requirement("SWR-200", RequirementStatus.Approved, "Epic: Alarm-System fuer Gegner", "Docs/requirements/alarm-system/README.md", false, "54b94051e3fafd82")]
+        [Requirement("SWR-200", RequirementStatus.Approved, "Epic: Alarm-System fuer Gegner", "Docs/requirements/alarm-system/README.md", false, "d8343d2ed866ed8d", false)]
         SWR_200 = 200,
 
         /// <summary>[approved] Analyse der Gegner-KI (Erkennung, Schaden, Zustaende) (Docs/requirements/alarm-system/01-code-analyze-enemy-ai.md)</summary>
-        [Requirement("SWR-201", RequirementStatus.Approved, "Analyse der Gegner-KI (Erkennung, Schaden, Zustaende)", "Docs/requirements/alarm-system/01-code-analyze-enemy-ai.md", false, "8467e8ef4b05abb9")]
+        [Requirement("SWR-201", RequirementStatus.Approved, "Analyse der Gegner-KI (Erkennung, Schaden, Zustaende)", "Docs/requirements/alarm-system/01-code-analyze-enemy-ai.md", false, "fa086d8e1ca2c697", false)]
         SWR_201 = 201,
 
         /// <summary>[approved] Alarm-Komponente mit konfigurierbarem Radius (Docs/requirements/alarm-system/02-code-alarm-component.md)</summary>
-        [Requirement("SWR-202", RequirementStatus.Approved, "Alarm-Komponente mit konfigurierbarem Radius", "Docs/requirements/alarm-system/02-code-alarm-component.md", true, "b50146797eafb02b")]
+        [Requirement("SWR-202", RequirementStatus.Approved, "Alarm-Komponente mit konfigurierbarem Radius", "Docs/requirements/alarm-system/02-code-alarm-component.md", true, "ebb3e6cde01627c4", true)]
         SWR_202 = 202,
 
         /// <summary>[approved] Alarm bei Spieler-Erkennung ausloesen (Docs/requirements/alarm-system/03-code-alarm-on-detection.md)</summary>
-        [Requirement("SWR-203", RequirementStatus.Approved, "Alarm bei Spieler-Erkennung ausloesen", "Docs/requirements/alarm-system/03-code-alarm-on-detection.md", true, "a30e84e9190172e8")]
+        [Requirement("SWR-203", RequirementStatus.Approved, "Alarm bei Spieler-Erkennung ausloesen", "Docs/requirements/alarm-system/03-code-alarm-on-detection.md", true, "c002d6fcd70d2a15", true)]
         SWR_203 = 203,
 
         /// <summary>[approved] Alarm bei Schaden durch den Spieler ausloesen (Docs/requirements/alarm-system/04-code-alarm-on-damage.md)</summary>
-        [Requirement("SWR-204", RequirementStatus.Approved, "Alarm bei Schaden durch den Spieler ausloesen", "Docs/requirements/alarm-system/04-code-alarm-on-damage.md", true, "3fc67a86ef5be8ac")]
+        [Requirement("SWR-204", RequirementStatus.Approved, "Alarm bei Schaden durch den Spieler ausloesen", "Docs/requirements/alarm-system/04-code-alarm-on-damage.md", true, "c6a65bb2cf3ba90c", true)]
         SWR_204 = 204,
 
         /// <summary>[approved] Alarm-Propagation an nahe Gegner (Selbst-/Toten-Ausschluss) (Docs/requirements/alarm-system/05-code-alarm-propagation.md)</summary>
-        [Requirement("SWR-205", RequirementStatus.Approved, "Alarm-Propagation an nahe Gegner (Selbst-/Toten-Ausschluss)", "Docs/requirements/alarm-system/05-code-alarm-propagation.md", true, "d26d2ddbc28a507b")]
+        [Requirement("SWR-205", RequirementStatus.Approved, "Alarm-Propagation an nahe Gegner (Selbst-/Toten-Ausschluss)", "Docs/requirements/alarm-system/05-code-alarm-propagation.md", true, "6972397bb302bb29", true)]
         SWR_205 = 205,
 
         /// <summary>[approved] Integration und Test des Alarm-Systems (Docs/requirements/alarm-system/06-code-integration-test.md)</summary>
-        [Requirement("SWR-206", RequirementStatus.Approved, "Integration und Test des Alarm-Systems", "Docs/requirements/alarm-system/06-code-integration-test.md", false, "0183d2767918171c")]
+        [Requirement("SWR-206", RequirementStatus.Approved, "Integration und Test des Alarm-Systems", "Docs/requirements/alarm-system/06-code-integration-test.md", false, "f3b3d7a0f4818851", true)]
         SWR_206 = 206,
 
         /// <summary>[draft] Epic: Interaktionssystem mit Schaltern oder Terminals (Docs/requirements/interaction-system/README.md)</summary>
-        [Requirement("SWR-300", RequirementStatus.Draft, "Epic: Interaktionssystem mit Schaltern oder Terminals", "Docs/requirements/interaction-system/README.md", false, "f4c7127648babb65")]
+        [Requirement("SWR-300", RequirementStatus.Draft, "Epic: Interaktionssystem mit Schaltern oder Terminals", "Docs/requirements/interaction-system/README.md", false, "8e7a24aa58e512cb", false)]
         SWR_300 = 300,
 
         /// <summary>[draft] Epic: Zustandsbasierte Falle oder Gefahrenbereich (Docs/requirements/stateful-hazard/README.md)</summary>
-        [Requirement("SWR-400", RequirementStatus.Draft, "Epic: Zustandsbasierte Falle oder Gefahrenbereich", "Docs/requirements/stateful-hazard/README.md", false, "f8c89ac206c9546a")]
+        [Requirement("SWR-400", RequirementStatus.Draft, "Epic: Zustandsbasierte Falle oder Gefahrenbereich", "Docs/requirements/stateful-hazard/README.md", false, "446cd363818f50c9", false)]
         SWR_400 = 400,
     }
 }

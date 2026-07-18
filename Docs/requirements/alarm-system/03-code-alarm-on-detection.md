@@ -2,6 +2,7 @@
 req-id: SWR-203
 status: approved
 trace: required
+test: required
 title: Alarm bei Spieler-Erkennung ausloesen
 ---
 

@@ -68,6 +68,31 @@ namespace Unity.FPS.Tests
         }
 
         [Test]
+        public void Generator_EmitsTestRequiredFlag()
+        {
+            var required = FakeRequirement(999, RequirementStatus.Approved);
+            required.TestRequired = true;
+            var optional = FakeRequirement(998, RequirementStatus.Approved);
+            optional.TestRequired = false;
+
+            string source = ReqToCodeGenerator.GenerateSource(new[] { optional, required });
+
+            StringAssert.Contains("\"Docs/requirements/fake/999.md\", false, \"0000000000000000\", true)]", source);
+            StringAssert.Contains("\"Docs/requirements/fake/998.md\", false, \"0000000000000000\", false)]", source);
+        }
+
+        [Test]
+        public void Verifier_CountsTestCoverage_FromVerifiesAttributes()
+        {
+            ReqToCodeVerifier.ReferenceMap references = ReqToCodeVerifier.CollectReferences();
+
+            Assert.IsTrue(references.Verifies.ContainsKey(SWR.SWR_101),
+                "[Verifies] on tests in this assembly must be collected as test coverage.");
+            Assert.IsTrue(references.Traces.ContainsKey(SWR.SWR_101),
+                "[Traces] on implementation code must still be collected separately.");
+        }
+
+        [Test]
         public void Generator_RemovedRequirement_RemovesTraceable()
         {
             string withRequirement = ReqToCodeGenerator.GenerateSource(new[]
@@ -94,6 +119,7 @@ namespace Unity.FPS.Tests
                 Title = "Fake requirement for generator tests",
                 SourcePath = $"Docs/requirements/fake/{number}.md",
                 TraceRequired = false,
+                TestRequired = false,
                 ContentHash = "0000000000000000"
             };
         }

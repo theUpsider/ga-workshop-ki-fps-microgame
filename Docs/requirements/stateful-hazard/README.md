@@ -2,6 +2,7 @@
 req-id: SWR-400
 status: draft
 trace: optional
+test: optional
 title: Epic: Zustandsbasierte Falle oder Gefahrenbereich
 ---
 

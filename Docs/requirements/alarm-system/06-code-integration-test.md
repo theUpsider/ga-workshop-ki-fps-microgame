@@ -2,6 +2,7 @@
 req-id: SWR-206
 status: approved
 trace: optional
+test: required
 title: Integration und Test des Alarm-Systems
 ---
 

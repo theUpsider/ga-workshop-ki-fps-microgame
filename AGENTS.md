@@ -17,6 +17,11 @@ Rules when working in this repo:
 - Code implementing a requirement must carry `[Traces(SWR.SWR_<n>)]` on the implementing
   class/method. Approved requirements with `trace: required` that are untraced cause
   console errors after compilation, failing EditMode tests, and aborted player builds.
+- Tests covering a requirement must carry `[Verifies(SWR.SWR_<n>)]` on the test
+  method/class (only counts inside test assemblies). Approved requirements with
+  `test: required` and no `[Verifies]` reference fail verification the same way.
+  When implementing a new requirement, add both the `[Traces]` on the code and a
+  `[Verifies]` test.
 - When a requirement document changes, the traceables regenerate and the compiler/IDE
   flags affected code: obsolete-warnings for deprecated requirements, compile errors for
   removed ones. Fix the flagged code as part of the change.

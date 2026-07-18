@@ -2,6 +2,7 @@
 req-id: SWR-100
 status: approved
 trace: optional
+test: optional
 title: Epic: Gesperrter Ausgang / Lockable Barrier
 ---
 

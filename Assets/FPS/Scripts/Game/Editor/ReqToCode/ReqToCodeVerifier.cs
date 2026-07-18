@@ -10,9 +10,10 @@ namespace Unity.FPS.Game.Editor
 {
     /// <summary>
     /// ReqToCode traceability verification: checks that every approved requirement whose
-    /// trace is required is referenced by at least one [Traces] attribute in code, that the
-    /// generated traceables match the requirement sources, and reports deprecated
-    /// requirements that are still traced.
+    /// trace is required is referenced by at least one [Traces] attribute in code, that
+    /// every approved requirement whose test is required is referenced by at least one
+    /// [Verifies] attribute in a test assembly, that the generated traceables match the
+    /// requirement sources, and reports deprecated requirements that are still referenced.
     /// Violations are logged as console errors after every script reload and fail player
     /// builds (see <see cref="ReqToCodeBuildCheck"/>).
     /// </summary>
@@ -22,6 +23,15 @@ namespace Unity.FPS.Game.Editor
         {
             public readonly List<string> Errors = new List<string>();
             public readonly List<string> Warnings = new List<string>();
+        }
+
+        public sealed class ReferenceMap
+        {
+            /// <summary>[Traces] references (implementation code), per requirement.</summary>
+            public readonly Dictionary<SWR, List<string>> Traces = new Dictionary<SWR, List<string>>();
+
+            /// <summary>[Verifies] references found in test assemblies, per requirement.</summary>
+            public readonly Dictionary<SWR, List<string>> Verifies = new Dictionary<SWR, List<string>>();
         }
 
         /// <summary>Runs all traceability checks. Does not log; callers decide how to surface results.</summary>
@@ -35,7 +45,7 @@ namespace Unity.FPS.Game.Editor
             if (parseErrors.Count == 0 && !ReqToCodeGenerator.IsUpToDate(out string staleReason))
                 report.Errors.Add($"[ReqToCode] {staleReason}");
 
-            Dictionary<SWR, List<string>> traceLocations = CollectTraceLocations();
+            ReferenceMap references = CollectReferences();
 
             foreach (FieldInfo field in typeof(SWR).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
@@ -44,7 +54,8 @@ namespace Unity.FPS.Game.Editor
                     continue;
 
                 var value = (SWR)field.GetValue(null);
-                bool traced = traceLocations.TryGetValue(value, out List<string> locations) && locations.Count > 0;
+                bool traced = references.Traces.TryGetValue(value, out List<string> traceLocations) && traceLocations.Count > 0;
+                bool verified = references.Verifies.TryGetValue(value, out List<string> testLocations) && testLocations.Count > 0;
 
                 if (meta.Status == RequirementStatus.Approved && meta.TraceRequired && !traced)
                 {
@@ -53,26 +64,41 @@ namespace Unity.FPS.Game.Editor
                         $"Add [Traces(SWR.{field.Name})] to the implementing code element (source: {meta.SourcePath}).");
                 }
 
-                if (meta.Status == RequirementStatus.Deprecated && traced)
+                if (meta.Status == RequirementStatus.Approved && meta.TestRequired && !verified)
                 {
+                    report.Errors.Add(
+                        $"[ReqToCode] {meta.Id} \"{meta.Title}\" is approved but has no test coverage. " +
+                        $"Add [Verifies(SWR.{field.Name})] to a test in a test assembly (source: {meta.SourcePath}).");
+                }
+
+                if (meta.Status == RequirementStatus.Deprecated && (traced || verified))
+                {
+                    var locations = new List<string>();
+                    if (traced) locations.AddRange(traceLocations);
+                    if (verified) locations.AddRange(testLocations);
                     report.Warnings.Add(
-                        $"[ReqToCode] {meta.Id} is deprecated but still traced by: {string.Join(", ", locations)} " +
-                        $"(source: {meta.SourcePath}). Rework or remove the traced code.");
+                        $"[ReqToCode] {meta.Id} is deprecated but still referenced by: {string.Join(", ", locations)} " +
+                        $"(source: {meta.SourcePath}). Rework or remove the referencing code.");
                 }
             }
 
             return report;
         }
 
-        /// <summary>Maps each traced SWR to the code elements carrying a [Traces] attribute for it.</summary>
-        public static Dictionary<SWR, List<string>> CollectTraceLocations()
+        /// <summary>
+        /// Sweeps all assemblies referencing fps.Game and maps every SWR to the code elements
+        /// carrying [Traces] (any assembly) and [Verifies] (test assemblies only) for it.
+        /// </summary>
+        public static ReferenceMap CollectReferences()
         {
-            var map = new Dictionary<SWR, List<string>>();
+            var map = new ReferenceMap();
 
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                if (assembly.IsDynamic || !ReferencesGameAssembly(assembly))
+                if (assembly.IsDynamic || !ReferencesAssembly(assembly, "fps.Game"))
                     continue;
+
+                bool isTestAssembly = ReferencesAssembly(assembly, "nunit.framework");
 
                 Type[] types;
                 try
@@ -88,14 +114,14 @@ namespace Unity.FPS.Game.Editor
                 {
                     try
                     {
-                        AddTraces(map, type.GetCustomAttributes(typeof(TracesAttribute), false), type.FullName);
+                        CollectFrom(map, type.GetCustomAttributes(false), type.FullName, isTestAssembly);
 
                         foreach (MemberInfo member in type.GetMembers(
                                      BindingFlags.Public | BindingFlags.NonPublic |
                                      BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly))
                         {
-                            AddTraces(map, member.GetCustomAttributes(typeof(TracesAttribute), false),
-                                $"{type.FullName}.{member.Name}");
+                            CollectFrom(map, member.GetCustomAttributes(false),
+                                $"{type.FullName}.{member.Name}", isTestAssembly);
                         }
                     }
                     catch (Exception)
@@ -108,26 +134,33 @@ namespace Unity.FPS.Game.Editor
             return map;
         }
 
-        static void AddTraces(Dictionary<SWR, List<string>> map, object[] attributes, string location)
+        static void CollectFrom(ReferenceMap map, object[] attributes, string location, bool isTestAssembly)
         {
-            foreach (TracesAttribute traces in attributes.OfType<TracesAttribute>())
+            foreach (object attribute in attributes)
             {
-                foreach (SWR requirement in traces.Requirements)
-                {
-                    if (!map.TryGetValue(requirement, out List<string> locations))
-                        map[requirement] = locations = new List<string>();
-                    locations.Add(location);
-                }
+                if (attribute is TracesAttribute traces)
+                    Add(map.Traces, traces.Requirements, location);
+                else if (attribute is VerifiesAttribute verifies && isTestAssembly)
+                    Add(map.Verifies, verifies.Requirements, location);
             }
         }
 
-        static bool ReferencesGameAssembly(Assembly assembly)
+        static void Add(Dictionary<SWR, List<string>> map, SWR[] requirements, string location)
         {
-            string name = assembly.GetName().Name;
-            if (name == "fps.Game")
+            foreach (SWR requirement in requirements)
+            {
+                if (!map.TryGetValue(requirement, out List<string> locations))
+                    map[requirement] = locations = new List<string>();
+                locations.Add(location);
+            }
+        }
+
+        static bool ReferencesAssembly(Assembly assembly, string assemblyName)
+        {
+            if (assembly.GetName().Name == assemblyName)
                 return true;
 
-            return assembly.GetReferencedAssemblies().Any(reference => reference.Name == "fps.Game");
+            return assembly.GetReferencedAssemblies().Any(reference => reference.Name == assemblyName);
         }
 
         [MenuItem("Tools/ReqToCode/Verify Traceability")]
@@ -136,7 +169,11 @@ namespace Unity.FPS.Game.Editor
             Report report = Verify();
             LogReport(report);
             if (report.Errors.Count == 0)
-                Debug.Log($"[ReqToCode] Traceability OK ({CollectTraceLocations().Count} requirement(s) traced).");
+            {
+                ReferenceMap references = CollectReferences();
+                Debug.Log($"[ReqToCode] Traceability OK ({references.Traces.Count} requirement(s) traced, " +
+                          $"{references.Verifies.Count} covered by tests).");
+            }
         }
 
         public static void LogReport(Report report)
