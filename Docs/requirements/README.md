@@ -1,5 +1,8 @@
 # Requirements & ReqToCode-Traceability
 
+> Sprach-/framework-agnostische Bauanleitung des Gesamtsystems (fuer die
+> Uebertragung auf andere Stacks): [Docs/reqtocode-blueprint.md](../reqtocode-blueprint.md)
+
 Dieser Ordner ist die **Source of Truth** fuer alle Software-Requirements (SWR) des Projekts.
 Aus den Markdown-Dokumenten hier werden **compile-zeit-feste Traceables** generiert
 ([Assets/FPS/Scripts/Game/Requirements/SWR.g.cs](../../Assets/FPS/Scripts/Game/Requirements/SWR.g.cs)),
