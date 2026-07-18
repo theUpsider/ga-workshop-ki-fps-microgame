@@ -1,3 +1,10 @@
+---
+req-id: SWR-203
+status: approved
+trace: required
+title: Alarm bei Spieler-Erkennung ausloesen
+---
+
 # 03-code-alarm-on-detection – Alarm bei Spieler-Erkennung
 
 **Status:** erledigt

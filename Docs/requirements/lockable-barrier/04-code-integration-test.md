@@ -1,3 +1,10 @@
+---
+req-id: SWR-104
+status: approved
+trace: optional
+title: Integration und Test der Barrier im Level
+---
+
 # 04-code-integration-test – Integration & End-to-End-Test
 
 **Status:** erledigt

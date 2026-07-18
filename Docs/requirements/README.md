@@ -1,0 +1,83 @@
+# Requirements & ReqToCode-Traceability
+
+Dieser Ordner ist die **Source of Truth** fuer alle Software-Requirements (SWR) des Projekts.
+Aus den Markdown-Dokumenten hier werden **compile-zeit-feste Traceables** generiert
+([Assets/FPS/Scripts/Game/Requirements/SWR.g.cs](../../Assets/FPS/Scripts/Game/Requirements/SWR.g.cs)),
+die der Implementierungscode per Attribut referenziert. Ein gebrochener Trace ist damit kein
+verwaistes Kommentar, sondern ein Build-Fehler.
+
+## Requirement-Dokumente
+
+Jedes Requirement ist eine Markdown-Datei mit YAML-Frontmatter. Nur Dateien mit `req-id`
+werden vom Generator erfasst; alle anderen (Analyseberichte, Testprotokolle, editor-tasks)
+werden ignoriert.
+
+```markdown
+---
+req-id: SWR-101
+status: approved
+trace: required
+title: Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik
+---
+```
+
+| Feld | Werte | Bedeutung |
+| --- | --- | --- |
+| `req-id` | `SWR-<nummer>` (eindeutig) | Stabile ID; wird zum Enum-Member `SWR.SWR_<nummer>` |
+| `status` | `draft` \| `approved` \| `deprecated` | Lebenszyklus (siehe unten) |
+| `trace` | `required` (Default) \| `optional` | Ob der Code das Requirement referenzieren **muss** |
+| `title` | Freitext | Kurztitel; Fallback ist die erste Markdown-Ueberschrift |
+
+Nummernschema: `SWR-x00` = Epic eines Features (trace optional, wird ueber die Subtasks
+realisiert), `SWR-x01..x99` = einzelne Requirements des Features. Vergeben: `1xx`
+lockable-barrier, `2xx` alarm-system, `3xx` interaction-system, `4xx` stateful-hazard.
+
+## Traces im Code
+
+Der implementierende Code referenziert sein Requirement mit dem `[Traces]`-Attribut
+(Klasse, Methode, Property, Feld, ...):
+
+```csharp
+[Traces(SWR.SWR_101)]
+public class Barrier : MonoBehaviour { ... }
+
+[Traces(SWR.SWR_102)]
+void ApplyState() { ... }
+```
+
+Das ist ein Compile-Zeit-Link, kein Kommentar. Ein Element kann mehrere Requirements
+tracen (`[Traces(SWR.SWR_101, SWR.SWR_102)]`), ein Requirement kann an mehreren Stellen
+getraced werden.
+
+## Lebenszyklus (graduated lifecycle)
+
+| Statusaenderung | Wirkung |
+| --- | --- |
+| `draft` | Traceable existiert, Code darf referenzieren, nichts wird erzwungen |
+| `approved` + `trace: required` | Mindestens eine `[Traces]`-Referenz muss existieren, sonst Verifikationsfehler (Console-Error nach jedem Compile, Testfehler, Build-Abbruch) |
+| `deprecated` | Traceable erhaelt `[Obsolete]` → IDE-/Compiler-Warnung an **jeder** Referenzstelle |
+| Datei/`req-id` entfernt | Enum-Member verschwindet → **Compile-Fehler** an jeder Referenzstelle |
+
+## Ablauf bei Requirement-Aenderungen
+
+1. Requirement-Datei aendern (Status, Text, neue Datei, Loeschung) → Commit.
+2. Der Generator erkennt die Drift automatisch (Hash im Header von `SWR.g.cs`) und
+   regeneriert beim naechsten Script-Reload; manuell: Menu **Tools ▸ ReqToCode ▸
+   Regenerate Traceables**. Auch der Agent-Testlauf (`Tools/agent-tests/Invoke-AgentTests.ps1`)
+   regeneriert vor dem Testen.
+3. Compiler/IDE zeigen die Konsequenzen an den betroffenen Codestellen (Warnung bei
+   deprecated, Fehler bei entfernt).
+4. Verifikation: Menu **Tools ▸ ReqToCode ▸ Verify Traceability**, die EditMode-Tests
+   (`Unity.FPS.Tests.ReqToCodeTests`) oder ein Player-Build (bricht bei Verstoessen ab).
+
+## Beteiligte Komponenten
+
+- [ReqToCodeGenerator.cs](../../Assets/FPS/Scripts/Game/Editor/ReqToCode/ReqToCodeGenerator.cs) — Frontmatter-Parser + Codegenerator + Auto-Regeneration
+- [ReqToCodeVerifier.cs](../../Assets/FPS/Scripts/Game/Editor/ReqToCode/ReqToCodeVerifier.cs) — Traceability-Pruefung (Reflection ueber alle Spiel-Assemblies), Console-Errors nach jedem Reload
+- [ReqToCodeBuildCheck.cs](../../Assets/FPS/Scripts/Game/Editor/ReqToCode/ReqToCodeBuildCheck.cs) — bricht Player-Builds bei Verstoessen ab
+- [Traceability.cs](../../Assets/FPS/Scripts/Game/Requirements/Traceability.cs) — `TracesAttribute`, `RequirementAttribute`, `RequirementStatus`
+- [SWR.g.cs](../../Assets/FPS/Scripts/Game/Requirements/SWR.g.cs) — generiert, nicht manuell editieren
+- [ReqToCodeTests.cs](../../Assets/Tests/EditMode/ReqToCodeTests.cs) — EditMode-Tests der gesamten Kette
+
+> Naechster Schritt (geplant): Verknuepfung der Requirements mit Tests, damit auch die
+> Testabdeckung pro SWR nachweisbar wird.

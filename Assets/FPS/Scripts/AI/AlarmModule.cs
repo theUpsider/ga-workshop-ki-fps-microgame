@@ -9,6 +9,7 @@ namespace Unity.FPS.AI
     /// Ermöglicht das Auslösen eines Alarms mit einem konfigurierbaren Radius,
     /// innerhalb dessen andere Gegner benachrichtigt werden können.
     /// </summary>
+    [Traces(SWR.SWR_202)]
     public class AlarmModule : MonoBehaviour
     {
         [Tooltip("Radius innerhalb dessen andere Gegner alarmiert werden")]
@@ -30,6 +31,7 @@ namespace Unity.FPS.AI
         /// Löst einen Alarm aus und propagiert ihn an alle Gegner im AlarmRadius.
         /// Selbst-Ausschluss und Toten-Ausschluss werden berücksichtigt.
         /// </summary>
+        [Traces(SWR.SWR_205)]
         public void TriggerAlarm(GameObject target)
         {
             Debug.Log($"[AlarmModule] Alarm triggered on {gameObject.name}. Alarm radius: {AlarmRadius}");

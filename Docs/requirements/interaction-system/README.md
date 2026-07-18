@@ -1,3 +1,10 @@
+---
+req-id: SWR-300
+status: draft
+trace: optional
+title: Epic: Interaktionssystem mit Schaltern oder Terminals
+---
+
 # Epic: Interaktionssystem mit Schaltern oder Terminals
 
 **GitHub-Epic:** [#13 – Feature 2: Interaktionssystem mit Schaltern oder Terminals](https://github.com/theUpsider/ga-workshop-ki-fps-microgame/issues/13)

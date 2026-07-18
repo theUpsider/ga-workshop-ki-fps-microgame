@@ -39,6 +39,15 @@ namespace Unity.FPS.Game.Editor
                 return;
             }
 
+            // Pick up file changes made while the editor was unfocused and make sure the
+            // ReqToCode traceables match the requirement sources before running tests.
+            AssetDatabase.Refresh();
+            if (ReqToCodeGenerator.RegenerateIfStale(out _))
+                return; // recompile pending; the request stays queued and is retried after reload
+
+            if (EditorApplication.isCompiling || EditorApplication.isUpdating)
+                return;
+
             RunEditModeTests(testName);
         }
 

@@ -1,3 +1,10 @@
+---
+req-id: SWR-201
+status: approved
+trace: optional
+title: Analyse der Gegner-KI (Erkennung, Schaden, Zustaende)
+---
+
 # 01-code-analyze-enemy-ai – Analyse der Gegner-KI
 
 **Status:** erledigt

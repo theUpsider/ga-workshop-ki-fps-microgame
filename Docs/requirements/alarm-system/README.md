@@ -1,3 +1,10 @@
+---
+req-id: SWR-200
+status: approved
+trace: optional
+title: Epic: Alarm-System fuer Gegner
+---
+
 # Alarm-System für Gegner
 
 ## Feature-Beschreibung

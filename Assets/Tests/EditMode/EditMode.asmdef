@@ -1,5 +1,9 @@
 {
     "name": "EditMode",
+    "references": [
+        "fps.Game",
+        "fps.Game.Editor"
+    ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],

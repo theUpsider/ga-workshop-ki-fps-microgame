@@ -1,3 +1,10 @@
+---
+req-id: SWR-102
+status: approved
+trace: required
+title: Visuelles Feedback der Barrier-Zustaende
+---
+
 # 02-code-visual-feedback – Visuelles Feedback fuer Zustaende
 
 **Status:** erledigt

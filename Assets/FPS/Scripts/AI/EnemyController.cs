@@ -250,6 +250,7 @@ namespace Unity.FPS.AI
             }
         }
 
+        [Traces(SWR.SWR_203)]
         void OnDetectedTarget()
         {
             onDetectedTarget.Invoke();
@@ -350,6 +351,7 @@ namespace Unity.FPS.AI
             }
         }
 
+        [Traces(SWR.SWR_204)]
         void OnDamaged(float damage, GameObject damageSource)
         {
             // test if the damage source is the player

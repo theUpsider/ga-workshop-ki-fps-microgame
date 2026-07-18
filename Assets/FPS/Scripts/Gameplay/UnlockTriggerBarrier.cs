@@ -19,6 +19,7 @@ namespace Unity.FPS.Gameplay
     /// Listens for gameplay events and unlocks one or more <see cref="Barrier"/> instances
     /// when a configurable condition is met. Triggers only once.
     /// </summary>
+    [Traces(SWR.SWR_103)]
     public class UnlockTriggerBarrier : MonoBehaviour
     {
         [Header("Configuration")]

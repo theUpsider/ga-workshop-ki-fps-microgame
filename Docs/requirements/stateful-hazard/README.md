@@ -1,3 +1,10 @@
+---
+req-id: SWR-400
+status: draft
+trace: optional
+title: Epic: Zustandsbasierte Falle oder Gefahrenbereich
+---
+
 # Epic: Zustandsbasierte Falle oder Gefahrenbereich
 
 **GitHub-Epic:** [#14 – Feature 3: Zustandsbasierte Falle oder Gefahrenbereich](https://github.com/theUpsider/ga-workshop-ki-fps-microgame/issues/14)

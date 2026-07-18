@@ -1,3 +1,10 @@
+---
+req-id: SWR-205
+status: approved
+trace: required
+title: Alarm-Propagation an nahe Gegner (Selbst-/Toten-Ausschluss)
+---
+
 # 05-code-alarm-propagation – Alarm-Propagation zu nahen Gegnern
 
 **Status:** erledigt

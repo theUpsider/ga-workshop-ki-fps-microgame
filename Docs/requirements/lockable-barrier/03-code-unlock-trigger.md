@@ -1,3 +1,10 @@
+---
+req-id: SWR-103
+status: approved
+trace: required
+title: Freischaltungs-Trigger fuer Barrieren
+---
+
 # 03-code-unlock-trigger – Freischaltungs-Trigger implementieren
 
 **Status:** erledigt

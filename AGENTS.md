@@ -4,6 +4,26 @@ This is a Unity project (FPS Microgame-based). C# scripts live under `Assets/FPS
 (runtime code split into `AI`, `Game`, `Gameplay`, `UI` assemblies) and `Assets/Tests/`
 (`EditMode`/`PlayMode` NUnit test assemblies).
 
+## Requirements traceability (ReqToCode)
+
+Requirements live as markdown files with YAML frontmatter (`req-id`, `status`, `trace`,
+`title`) under `Docs/requirements/` — see [Docs/requirements/README.md](Docs/requirements/README.md).
+From these, `Assets/FPS/Scripts/Game/Requirements/SWR.g.cs` is generated (never edit it
+manually; regenerate via the Unity menu Tools ▸ ReqToCode ▸ Regenerate Traceables, or let
+the automatic reload/test-run hook do it).
+
+Rules when working in this repo:
+
+- Code implementing a requirement must carry `[Traces(SWR.SWR_<n>)]` on the implementing
+  class/method. Approved requirements with `trace: required` that are untraced cause
+  console errors after compilation, failing EditMode tests, and aborted player builds.
+- When a requirement document changes, the traceables regenerate and the compiler/IDE
+  flags affected code: obsolete-warnings for deprecated requirements, compile errors for
+  removed ones. Fix the flagged code as part of the change.
+- New requirements get a new unique `req-id` (`SWR-x00` = feature epic, `SWR-x01+` =
+  individual requirements; `1xx` lockable-barrier, `2xx` alarm-system, `3xx`
+  interaction-system, `4xx` stateful-hazard).
+
 ## Running tests after a code change
 
 Unity tests cannot be run from a plain CLI/batchmode invocation in this workflow.

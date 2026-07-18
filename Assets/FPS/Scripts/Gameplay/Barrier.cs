@@ -18,6 +18,7 @@ namespace Unity.FPS.Gameplay
     /// Once unlocked, the barrier cannot be locked again (persistent unlock).
     /// </summary>
     [RequireComponent(typeof(Collider))]
+    [Traces(SWR.SWR_101)]
     public class Barrier : MonoBehaviour
     {
         [Header("Parameters")]
@@ -49,6 +50,7 @@ namespace Unity.FPS.Gameplay
             OnStateChanged.Invoke(CurrentState);
         }
 
+        [Traces(SWR.SWR_102)]
         void ApplyState()
         {
             m_BarrierCollider.enabled = (CurrentState == BarrierState.Locked);

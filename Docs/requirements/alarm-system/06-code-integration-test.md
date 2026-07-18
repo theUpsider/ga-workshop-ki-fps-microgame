@@ -1,3 +1,10 @@
+---
+req-id: SWR-206
+status: approved
+trace: optional
+title: Integration und Test des Alarm-Systems
+---
+
 # 06-code-integration-test – Integration & End-to-End-Test
 
 **Status:** erledigt

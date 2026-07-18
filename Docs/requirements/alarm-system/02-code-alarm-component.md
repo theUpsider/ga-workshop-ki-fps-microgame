@@ -1,3 +1,10 @@
+---
+req-id: SWR-202
+status: approved
+trace: required
+title: Alarm-Komponente mit konfigurierbarem Radius
+---
+
 # 02-code-alarm-component – Alarm-Komponente erstellen
 
 **Status:** erledigt

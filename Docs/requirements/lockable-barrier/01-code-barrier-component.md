@@ -1,3 +1,10 @@
+---
+req-id: SWR-101
+status: approved
+trace: required
+title: Barrier-Komponente mit locked/unlocked-Zustand und Kollisionslogik
+---
+
 # 01-code-barrier-component – Barrier-Komponente erstellen
 
 **Status:** erledigt

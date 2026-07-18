@@ -1,3 +1,10 @@
+---
+req-id: SWR-204
+status: approved
+trace: required
+title: Alarm bei Schaden durch den Spieler ausloesen
+---
+
 # 04-code-alarm-on-damage – Alarm bei Spieler-Schaden
 
 **Status:** erledigt
