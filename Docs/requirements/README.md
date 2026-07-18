@@ -89,6 +89,9 @@ keine Abdeckung und umgekehrt.
    deprecated, Fehler bei entfernt).
 4. Verifikation: Menu **Tools ▸ ReqToCode ▸ Verify Traceability**, die EditMode-Tests
    (`Unity.FPS.Tests.ReqToCodeTests`) oder ein Player-Build (bricht bei Verstoessen ab).
+5. Fuer den agentischen Change-Durchzug (Diff lesen → Referenzen finden → Code und
+   Tests ueberarbeiten → committen) existiert ein Playbook als Agent-Skill:
+   [.claude/skills/reqtocode-propagate/SKILL.md](../../.claude/skills/reqtocode-propagate/SKILL.md).
 
 ## Pre-Commit-Hook
 

@@ -34,6 +34,14 @@ Rules when working in this repo:
   `SWR.g.cs`, or missing required traces — no Unity Editor needed. If it reports a
   stale `SWR.g.cs`, regenerate (Editor menu or `Check-ReqToCode.ps1 -Fix`) and stage
   the result; do not edit the file by hand.
+- When ReqToCode reports violations (console errors, failing `ReqToCodeTests`,
+  compile errors on removed `SWR` members, or a hook-blocked commit), follow the
+  change-propagation playbook in
+  [.claude/skills/reqtocode-propagate/SKILL.md](.claude/skills/reqtocode-propagate/SKILL.md):
+  read the requirement diff, regenerate, find all `[Traces]`/`[Verifies]` reference
+  sites, rework implementation and tests to match the new requirement text, run the
+  Edit Mode suite, and commit everything as one unit. Never silence a violation by
+  deleting traces or weakening the requirement.
 
 ## Running tests after a code change
 
