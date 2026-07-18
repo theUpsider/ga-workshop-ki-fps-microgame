@@ -70,6 +70,29 @@ getraced werden.
 4. Verifikation: Menu **Tools ▸ ReqToCode ▸ Verify Traceability**, die EditMode-Tests
    (`Unity.FPS.Tests.ReqToCodeTests`) oder ein Player-Build (bricht bei Verstoessen ab).
 
+## Pre-Commit-Hook
+
+Der versionierte Hook [Tools/git-hooks/pre-commit](../../Tools/git-hooks/pre-commit)
+blockiert Commits, wenn Requirement-Quellen fehlerhaft sind, `SWR.g.cs` nicht zu den
+Quellen passt oder ein approved Requirement mit `trace: required` nirgends referenziert
+wird. Er laeuft ohne Unity-Editor (PowerShell-Spiegel der Generator-Logik in
+[Tools/reqtocode/Check-ReqToCode.ps1](../../Tools/reqtocode/Check-ReqToCode.ps1)).
+
+Einmalig pro Clone aktivieren:
+
+```
+git config core.hooksPath Tools/git-hooks
+```
+
+Bei veralteter `SWR.g.cs` ohne offenen Editor:
+
+```
+powershell -NoProfile -File Tools/reqtocode/Check-ReqToCode.ps1 -Fix
+```
+
+Der EditMode-Test `GeneratedTraceables_AreUpToDate` stellt sicher, dass Skript und
+C#-Generator dasselbe Ergebnis erzeugen — der C#-Generator im Editor bleibt massgeblich.
+
 ## Beteiligte Komponenten
 
 - [ReqToCodeGenerator.cs](../../Assets/FPS/Scripts/Game/Editor/ReqToCode/ReqToCodeGenerator.cs) — Frontmatter-Parser + Codegenerator + Auto-Regeneration

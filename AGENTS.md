@@ -23,6 +23,12 @@ Rules when working in this repo:
 - New requirements get a new unique `req-id` (`SWR-x00` = feature epic, `SWR-x01+` =
   individual requirements; `1xx` lockable-barrier, `2xx` alarm-system, `3xx`
   interaction-system, `4xx` stateful-hazard).
+- A pre-commit hook (`Tools/git-hooks/pre-commit`, enable once per clone with
+  `git config core.hooksPath Tools/git-hooks`) runs
+  `Tools/reqtocode/Check-ReqToCode.ps1` and blocks commits on parse errors, a stale
+  `SWR.g.cs`, or missing required traces — no Unity Editor needed. If it reports a
+  stale `SWR.g.cs`, regenerate (Editor menu or `Check-ReqToCode.ps1 -Fix`) and stage
+  the result; do not edit the file by hand.
 
 ## Running tests after a code change
 
