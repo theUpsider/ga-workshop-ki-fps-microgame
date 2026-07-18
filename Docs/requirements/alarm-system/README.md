@@ -9,7 +9,7 @@ title: Epic: Alarm-System fuer Gegner
 
 ## Feature-Beschreibung
 
-Im Unity FPS Microgame soll ein Alarm-System für Gegner implementiert werden. Wenn ein Gegner den Spieler entdeckt oder vom Spieler Schaden erhält, sollen andere Gegner in der Nähe ebenfalls alarmiert werden. Alarmierte Gegner sollen den Spieler daraufhin als Bedrohung behandeln und mit ihrer normalen Gegnerlogik auf ihn reagieren (z. B. verfolgen oder angreifen).
+Im Unity FPS Microgame soll ein Alarm-System für Gegner implementiert werden. Wenn ein Gegner den Spieler entdeckt oder vom Spieler Schaden erhält, sollen andere Gegner in der Nähe ebenfalls alarmiert werden. Alarmierte Gegner sollen den Spieler daraufhin als Bedrohung behandeln und mit ihrer normalen Gegnerlogik auf ihn reagieren (z. B. verfolgen und angreifen).
 
 Die Lösung soll mit den vorhandenen Systemen der Gegner-KI arbeiten und keine unnötige doppelte Logik erzeugen.
 
