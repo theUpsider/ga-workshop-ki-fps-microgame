@@ -188,6 +188,8 @@ namespace Unity.FPS.Game.Editor
     /// <summary>
     /// Runs ReqToCode after every script reload: regenerates stale traceables (which triggers
     /// a recompile) and otherwise verifies traceability, surfacing violations as console errors.
+    /// The same logic is invoked by <see cref="ReqToCodeWatcher"/> when a requirement markdown
+    /// changes, so markdown-only edits surface without a manual verify step.
     /// </summary>
     static class ReqToCodeHooks
     {
@@ -197,24 +199,31 @@ namespace Unity.FPS.Game.Editor
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
 
-            EditorApplication.delayCall += () =>
+            EditorApplication.delayCall += RunAfterChange;
+        }
+
+        /// <summary>
+        /// Regenerates stale traceables (triggers a recompile) or, if already up to date,
+        /// verifies traceability. Must run on the main thread. Shared by the script-reload
+        /// hook and the requirement-markdown watcher.
+        /// </summary>
+        internal static void RunAfterChange()
+        {
+            bool regenerated = ReqToCodeGenerator.RegenerateIfStale(out List<string> parseErrors);
+            foreach (string error in parseErrors)
+                Debug.LogError(error);
+
+            if (parseErrors.Count > 0)
+                return;
+
+            if (regenerated)
             {
-                bool regenerated = ReqToCodeGenerator.RegenerateIfStale(out List<string> parseErrors);
-                foreach (string error in parseErrors)
-                    Debug.LogError(error);
+                Debug.Log("[ReqToCode] Requirement sources changed, regenerated " +
+                          $"{ReqToCodeGenerator.GeneratedFilePath} (recompile pending).");
+                return;
+            }
 
-                if (parseErrors.Count > 0)
-                    return;
-
-                if (regenerated)
-                {
-                    Debug.Log("[ReqToCode] Requirement sources changed, regenerated " +
-                              $"{ReqToCodeGenerator.GeneratedFilePath} (recompile pending).");
-                    return;
-                }
-
-                ReqToCodeVerifier.LogReport(ReqToCodeVerifier.Verify());
-            };
+            ReqToCodeVerifier.LogReport(ReqToCodeVerifier.Verify());
         }
     }
 }
