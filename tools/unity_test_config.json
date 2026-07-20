@@ -1,0 +1,36 @@
+{
+  "projectPath": ".",
+  "resultsDirectory": "artifacts/unity-tests",
+  "unityEditorEnvironmentVariable": "UNITY_EDITOR",
+  "failOnNoTests": true,
+  "failOnInconclusive": true,
+  "connectedEditor": {
+    "enabled": true,
+    "host": "127.0.0.1",
+    "port": 17930,
+    "connectTimeoutSeconds": 1.0
+  },
+  "nographics": {
+    "EditMode": true,
+    "PlayMode": true
+  },
+  "timeoutsSeconds": {
+    "EditMode": 900,
+    "PlayMode": 1800
+  },
+  "suites": {
+    "fast": [
+      {
+        "platform": "EditMode"
+      }
+    ],
+    "full": [
+      {
+        "platform": "EditMode"
+      },
+      {
+        "platform": "PlayMode"
+      }
+    ]
+  }
+}

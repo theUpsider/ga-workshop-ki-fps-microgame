@@ -1,0 +1,49 @@
+name: Unity tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  editmode:
+    name: Unity Edit Mode
+    runs-on: [self-hosted, windows, unity]
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Edit Mode tests
+        shell: pwsh
+        run: python tools/unity_test.py --platform EditMode --ci
+
+      - name: Upload Edit Mode results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-editmode-results
+          path: artifacts/unity-tests/
+
+  playmode:
+    name: Unity Play Mode
+    needs: editmode
+    runs-on: [self-hosted, windows, unity]
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Play Mode tests
+        shell: pwsh
+        run: python tools/unity_test.py --platform PlayMode --ci
+
+      - name: Upload Play Mode results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-playmode-results
+          path: artifacts/unity-tests/

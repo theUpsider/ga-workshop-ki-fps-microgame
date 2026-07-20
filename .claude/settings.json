@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python tools/unity_test.py:*)",
+      "Bash(python3 tools/unity_test.py:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)"
+    ],
+    "deny": ["Bash(*Unity.exe:*)", "Bash(*Unity.app*:*)"]
+  }
+}
