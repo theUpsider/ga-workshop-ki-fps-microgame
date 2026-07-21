@@ -81,3 +81,18 @@ This same script backs the Claude Code skill (`.claude/skills/run-unity-tests/`)
 the VS Code task `Unity: Run Edit Mode Tests` (`.vscode/tasks.json`) used by the
 `Test-Runner` GitHub Copilot agent (`.github/agents/test-runner.agent.md`), and
 this file — so results are consistent regardless of which tool made the change.
+
+### How to invoke (by agent type)
+
+- **VS Code / GitHub Copilot agent**: Use the VS Code task. Run the command
+  `workbench.action.tasks.runTask` with args `["Unity: Run Edit Mode Tests"]`.
+  This is the most reliable method — terminal text-injection (`sendSequence`)
+  is unreliable because the terminal may not be ready. After the task completes,
+  read `Temp/agent-test-result.json` for the outcome.
+
+- **Claude Code / terminal-capable agent**: Run the PowerShell command directly:
+  `powershell -NoProfile -File Tools/agent-tests/Invoke-AgentTests.ps1`.
+
+- **Either agent**: Both methods write the request to `Temp/agent-test-request.txt`
+  and poll `Temp/agent-test-result.json`. Results are identical regardless of
+  invocation method.

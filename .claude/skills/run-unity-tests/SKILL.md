@@ -17,6 +17,13 @@ same script backs this Claude Code skill, the root [AGENTS.md](../../../AGENTS.m
 (`.github/agents/test-runner.agent.md`), so results are consistent no matter which
 tool made the change.
 
+> **Agent-specific invocation**: If you are a **VS Code / GitHub Copilot** agent
+> with no terminal shell tool, use the VS Code task instead of the PowerShell
+> command below: run `workbench.action.tasks.runTask` with argument
+> `"Unity: Run Edit Mode Tests"`, then read `Temp/agent-test-result.json`.
+> Terminal text-injection (`sendSequence`) is unreliable here — the task runner
+> is the supported path for VS Code agents.
+
 ## Prerequisites
 
 - The Unity Editor must be open with this project loaded (`AgentTestBridge` is an
@@ -51,12 +58,12 @@ tool made the change.
 
 2. Read the exit code to decide what to do next:
 
-   | Exit code | Meaning                                                                 |
-   | --------- | ------------------------------------------------------------------------ |
-   | `0`       | Tests ran, all passed. Safe to report the task as done.                  |
+   | Exit code | Meaning                                                                   |
+   | --------- | ------------------------------------------------------------------------- |
+   | `0`       | Tests ran, all passed. Safe to report the task as done.                   |
    | `1`       | Tests ran, at least one failed. Fix the failure(s) before reporting done. |
-   | `2`       | Timed out — Editor likely not open, or still compiling/importing.        |
-   | `3`       | The bridge itself errored (e.g. couldn't read the request file).         |
+   | `2`       | Timed out — Editor likely not open, or still compiling/importing.         |
+   | `3`       | The bridge itself errored (e.g. couldn't read the request file).          |
 
 3. On failure (exit `1`), read `Temp/agent-test-result.json` and/or the Unity
    Editor log (`Editor.log` / the Console window) for the specific failing test
